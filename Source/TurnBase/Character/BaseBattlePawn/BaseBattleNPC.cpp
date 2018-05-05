@@ -31,7 +31,8 @@ void ABaseBattleNPC::InitPawnFromData(int32 id)
 			CurMagicDefense = PawnAttributeMsg->MagicDefense;
 			CurBattleRateSpeed = PawnAttributeMsg->BattleRateSpeed;
 			CurHP = MaxHP = PawnAttributeMsg->MaxHP;
-			CurLevel = 1;
+			CurLevel = PawnAttributeMsg->CurLevel;
+			ValueEXP = PawnAttributeMsg->ValueExp;
 			FightSeqImage = LoadObject<UTexture2D>(NULL, *PawnAttributeMsg->Image_FightSeq);
 
 			USkeletalMesh* SkeletalMesh = LoadObject<USkeletalMesh>(NULL, *PawnAttributeMsg->MeshPath);

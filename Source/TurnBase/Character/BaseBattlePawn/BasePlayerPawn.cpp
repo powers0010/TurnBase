@@ -24,6 +24,7 @@ void ABasePlayerPawn::InitPawnFromData(int32 id)
 			CurBattleRateSpeed = BattleRateSpeed = HeroAttributeMsg->BattleRateSpeed;
 			CurHP = MaxHP = HeroAttributeMsg->MaxHP;
 			CurLevel = 1;
+			CurLevelMaxEXP = LevelEXP::CaculatLevelEXP(CurLevel);
 			FightSeqImage = LoadObject<UTexture2D>(NULL, *HeroAttributeMsg->Image_FightSeq);
 
 			USkeletalMesh* SkeletalMesh = LoadObject<USkeletalMesh>(NULL, *HeroAttributeMsg->MeshPath);
@@ -64,6 +65,13 @@ void ABasePlayerPawn::InitPawnFromData(int32 id)
 	}
 }
 
+void ABasePlayerPawn::OnWin(float GainExp)
+{
+	Super::OnWin(GainExp);
+
+	GainEXP(GainExp);
+}
+
 void ABasePlayerPawn::ResetForBattleEnd(FVector loc)
 {
 	SetActorLocation(loc);
@@ -79,4 +87,25 @@ void ABasePlayerPawn::ResetForBattleEnd(FVector loc)
 			HPWidget->SetNameVisible(true);
 		}
 	}
+}
+
+void ABasePlayerPawn::GainEXP(float InExp)
+{
+	CurEXP += InExp;
+	if (CurEXP > CurLevelMaxEXP)
+	{
+		OnLevelUp(CurEXP - CurLevelMaxEXP);
+	}
+}
+
+void ABasePlayerPawn::OnLevelUp(float OverExp)
+{
+	CurEXP = 0.f;
+	CurLevel++;
+	CurLevelMaxEXP = LevelEXP::CaculatLevelEXP(CurLevel);
+	if (HPWidget)
+	{
+		HPWidget->SetNameTxt(GetViewName());
+	}
+	GainEXP(OverExp);
 }

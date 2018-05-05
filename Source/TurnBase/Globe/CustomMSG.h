@@ -24,160 +24,86 @@ struct FPawnAttributeData : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		int32 Id;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		FText PawnName;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		FString MeshPath;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		FString AnimBPPath;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		FString AnimSeq_Die;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		FString AnimMon_Attack;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		FString AnimMon_GetHit;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		FString Image_FightSeq;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		FString AnimSeq_Win;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		float MaxHP;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		float ATK;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		float MagicATK;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		float Defense;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		float MagicDefense;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		float BattleRateSpeed;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		FString AnimMon_Attack;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		FString AnimMon_GetHit;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		FString Image_FightSeq;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		int32 SkillID;
-};
-
-USTRUCT(BlueprintType)
-struct FPawnAttribute
-{
-	GENERATED_USTRUCT_BODY()
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		FText PawnName;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		float MaxHP;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurHP;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurATK;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurMagicATK;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurDefense;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurMagicDefense;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurBattleRateSpeed;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		float ATK;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		float MagicATK;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		float Defense;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		float MagicDefense;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		float BattleRateSpeed;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
 		int32 CurLevel;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		class UTexture2D* FightSeqImage;
-
-	FPawnAttribute()
-	{}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PawnAttributeData")
+		float ValueExp;
+	
 };
+
 
 USTRUCT(BlueprintType)
 struct FHeroAttributeData : public FTableRowBase
 {
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		int32 Id;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		FText PawnName;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		FString MeshPath;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		FString AnimBPPath;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		FString AnimSeq_Die;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		FString AnimMon_Attack;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		FString AnimMon_GetHit;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
-		FString Image_FightSeq;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		FString AnimSeq_Win;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
+		FString AnimMon_Attack;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
+		FString AnimMon_GetHit;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
+		FString Image_FightSeq;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		float MaxHP;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		float ATK;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		float MagicATK;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		float Defense;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		float MagicDefense;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		float BattleRateSpeed;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "FAttributeData")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HeroAttributeData")
 		int32 SkillID;
 };
 
-USTRUCT(BlueprintType)
-struct FHeroAttribute
-{
-	GENERATED_USTRUCT_BODY()
-
-		UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		FText PawnName;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float MaxHP;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurHP;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float ATK;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurATK;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float MagicATK;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurMagicATK;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float Defense;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurDefense;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float MagicDefense;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurMagicDefense;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float BattleRateSpeed;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurBattleRateSpeed;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		int32 CurLevel;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		class UTexture2D* FightSeqImage;
-
-	FHeroAttribute()
-	{}
-};
 
 USTRUCT(BlueprintType)
 struct FSkillInfo : public FTableRowBase

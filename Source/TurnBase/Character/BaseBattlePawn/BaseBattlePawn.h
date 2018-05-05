@@ -19,15 +19,13 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
-	FORCEINLINE class UUIHPWidget* GetHPWidget() { return HPWidget; }
-
-	FORCEINLINE TMap<int32, FSkillInfo>& GetSkillInfos() { return SkillInfos; }
+	virtual	void InitPawnFromData(int32 id) {}
 
 	bool GetSkillInfo(int32 SkillID, FSkillInfo& info);
-
-	virtual	void InitPawnFromData(int32 id){}
-
-	FORCEINLINE FText GetViewName() { return PawnName; }
+	
+	FORCEINLINE class UUIHPWidget* GetHPWidget() { return HPWidget; }
+	FORCEINLINE TMap<int32, FSkillInfo>& GetSkillInfos() { return SkillInfos; }
+	FORCEINLINE FText GetViewName() { return FText::FromString(FString::Printf(TEXT("%s LV%d"), *PawnName.ToString(), CurLevel))  ; }
 	FORCEINLINE float GetMaxHP() { return MaxHP; }
 	FORCEINLINE float GetCurHP() { return CurHP; }
 	FORCEINLINE float GetCurBattleRateSpeed() { return CurBattleRateSpeed; }
@@ -61,56 +59,28 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 		class UAnimMontage* AnimMon_Attack = nullptr;
 
-	UPROPERTY(EditDefaultsOnly)
-		int32 AttributeID = 0;
-
+	int32 AttributeID = 0;
 	//----------Attribute-------------------
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		FText PawnName;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float MaxHP;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurHP;
+	FText PawnName;
+	float MaxHP;
+	float CurHP;
+	float CurATK;
+	float CurMagicATK;
+	float CurDefense;
+	float CurMagicDefense;
+	float CurBattleRateSpeed;
+	class UTexture2D* FightSeqImage = nullptr;
+	int32 CurLevel;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurATK;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurMagicATK;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurDefense;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurMagicDefense;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float CurBattleRateSpeed;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		int32 CurLevel;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		class UTexture2D* FightSeqImage = nullptr;
-
-public:
-
-		
+public:	
 	bool bIsAlive = true;
 
 	bool bIsInDefense = false;
 
 	class ABaseBattleLevelActor* CurLevelActor = nullptr;
 
-protected:
-	FVector MoveOrign;
-	FVector MoveTargetLoc;
-	bool bNeedMove = false;
-	bool bIsMoveToAttacking = true;
 
-	bool bNeedRot = false;
-	FRotator TargetRot;
-	float DeYaw;
 public:
-
 	float DoAttack(int32 SkillID);
 
 	void HandleDamage(ABaseBattlePawn* Attacker,FSkillInfo& skillinfo);
@@ -119,9 +89,20 @@ public:
 
 	int32 AISelectSkill();
 
-	void OnWin();
+	virtual void OnWin( float GainExp);
 
+//----------------------战斗Level中的移动与旋转处理---------------------
+public:
 	void MoveToTarget(FVector& TargetLoc, bool bIsToAttacking);
-
 	void RotatorToTargetRotator(FRotator& Rot);
+
+	FVector MoveOrign;
+	FVector MoveTargetLoc;
+	bool bNeedMove = false;
+	bool bIsMoveToAttacking = true;
+
+	bool bNeedRot = false;
+	FRotator TargetRot;
+	float DeYaw;
+
 };

@@ -9,6 +9,7 @@
 
 class UUIBattleWidget;
 class ABaseBattlePawn;
+class ABaseBattleNPC;
 
 UCLASS()
 class TURNBASE_API ABaseBattleLevelActor : public AActor

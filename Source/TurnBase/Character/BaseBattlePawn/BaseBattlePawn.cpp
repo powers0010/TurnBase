@@ -157,7 +157,7 @@ void ABaseBattlePawn::HandleDamage(ABaseBattlePawn* Attacker, FSkillInfo& skilli
 			damage = Attacker->GetCurMagicATK() * skillinfo.Damage - GetCurMagicDefence();
 		}
 		
-		damage = FMath::Max<float>(0.f, damage) * (bIsInDefense ? 0.3f : 1.f);
+		damage = FMath::Max<float>(1.f, damage* (bIsInDefense ? 0.3f : 1.f)) ;
 		DecCurHP(damage);
 		
 		if (GetCurHP() <= 0.f)
@@ -202,7 +202,7 @@ int32 ABaseBattlePawn::AISelectSkill()
 	return 1;
 }
 
-void ABaseBattlePawn::OnWin()
+void ABaseBattlePawn::OnWin(float GainExp)
 {
 	if (AnimSeq_Win)
 	{

@@ -17,9 +17,10 @@ class TURNBASE_API ABaseBattleNPC : public ABaseBattlePawn
 public:
 	virtual	void InitPawnFromData(int32 id) override;
 
+	FORCEINLINE float GetValueEXP() { return ValueEXP; }
 
-
-public:
+protected:
+	float ValueEXP;
 
 	
 	

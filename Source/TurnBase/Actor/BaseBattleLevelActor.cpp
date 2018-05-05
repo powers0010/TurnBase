@@ -275,11 +275,21 @@ void ABaseBattleLevelActor::HandlePlayerWin()
 	if (Player)
 	{
 		bIsInBattleTick = false;
+
+		float valueexp = 0.f;
+		for (auto It = EnemyPawns.CreateConstIterator(); It; ++It)
+		{
+			if (ABaseBattleNPC* enemy = Cast<ABaseBattleNPC>(It.Key()))
+			{
+				valueexp += enemy->GetValueEXP();
+			}
+		}
+
 		for (auto It = PlayerPawns.CreateConstIterator(); It; ++It)
 		{
 			if (It.Key()->bIsAlive)
 			{
-				It.Key()->OnWin();
+				It.Key()->OnWin(valueexp);
 			}
 		}
 		if (BattleUI)

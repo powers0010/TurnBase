@@ -19,22 +19,36 @@ public:
 
 	void ResetForBattleEnd(FVector loc);
 	
+	virtual void OnWin(float GainExp) override;
+
+	void GainEXP(float InExp);
+
+	void OnLevelUp(float OverExp);
 
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float ATK;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float MagicATK;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float Defense;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float MagicDefense;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float BattleRateSpeed;
+	//属性
+	float ATK;
+	float MagicATK;
+	float Defense;
+	float MagicDefense;
+	float BattleRateSpeed;
 	
+	float CurEXP = 0.f;
+	float CurLevelMaxEXP = 100.f;
+
+	//属性成长
+	float ATKGrow;
+	float MagicATKGrow;
+	float DefenseGrow;
+	float MagicDefenseGrow;
+	float BattleRateSpeedGrow;
 };
+
+namespace LevelEXP
+{
+	static float CaculatLevelEXP(int32 level)
+	{
+		return level * 100.f;
+	}
+}
