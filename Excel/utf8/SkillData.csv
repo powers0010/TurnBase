@@ -1,0 +1,8 @@
+﻿,Id,SkillName,ViewName,AnimPath,AnimMon_Skill,DamageType,Damage,DamageRange,bIsLongDisSkill
+-1,说明行,技能名称,显示在UI上的名称,动画资源路径,加载的动画资源,伤害类型，0物理 1魔法,伤害系数,伤害范围类型：0单体 1行 2列 3全体,是否远程技能（是否需要移动）
+1001,1001,GuanYu_ZongPi,重劈,/Game/Mannequin/Anim/GuanYu/GuanYu_Skill_Montage.GuanYu_Skill_Montage,0,0,1.2,2,0
+1002,1002,GuanYu_TuoDao,拖刀,/Game/Mannequin/Anim/GuanYu/GuanYu_Skill_Montage.GuanYu_Skill_Montage,0,0,1.5,1,0
+1101,1101,LvBu_HengSao,旋风斩,/Game/Mannequin/Anim/LvBu/LvBu_Skill_Montage.LvBu_Skill_Montage,0,0,1.2,1,0
+1102,1102,LvBu_ChuanXin,穿心,/Game/Mannequin/Anim/LvBu/LvBu_Skill_Montage.LvBu_Skill_Montage,0,0,1.5,2,0
+1201,1201,ZhuGeLiang_RanShao,神火,/Game/Mannequin/Anim/ZhuGeLiang/ZhuGeLiang_Skill_Montage.ZhuGeLiang_Skill_Montage,0,1,1.2,3,1
+1202,1202,ZhuGeLiang_HunLuan,蛊惑,/Game/Mannequin/Anim/ZhuGeLiang/ZhuGeLiang_Skill_Montage.ZhuGeLiang_Skill_Montage,0,1,1.5,0,1
