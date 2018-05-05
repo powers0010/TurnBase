@@ -114,62 +114,6 @@ void ABaseBattlePawn::RotatorToTargetRotator(FRotator& Rot)
 	bNeedRot = true;
 }
 
-void ABaseBattlePawn::InitPawnFromData(int32 id)
-{
-	UMyGameInstance* instance = Cast<UMyGameInstance>(GetGameInstance());
-	if (instance && instance->DataManager)
-	{
-		FPawnAttributeData* PawnAttributeMsg = instance->DataManager->GetPawnAttributeAsset(id);
-		if (PawnAttributeMsg)
-		{
-			Attribute.PawnName = PawnAttributeMsg->PawnName;
-			Attribute.CurATK = Attribute.ATK = PawnAttributeMsg->ATK;
-			Attribute.CurMagicATK = Attribute.MagicATK = PawnAttributeMsg->MagicATK;
-			Attribute.CurDefense = Attribute.Defense = PawnAttributeMsg->Defense;
-			Attribute.CurMagicDefense = Attribute.MagicDefense = PawnAttributeMsg->MagicDefense;
-			Attribute.CurBattleRateSpeed = Attribute.BattleRateSpeed = PawnAttributeMsg->BattleRateSpeed;
-			Attribute.CurHP = Attribute.MaxHP = PawnAttributeMsg->MaxHP;
-			Attribute.CurLevel = 1;
-			Attribute.FightSeqImage = LoadObject<UTexture2D>(NULL, *PawnAttributeMsg->Image_FightSeq);
-
-			USkeletalMesh* SkeletalMesh = LoadObject<USkeletalMesh>(NULL, *PawnAttributeMsg->MeshPath);
-			if (SkeletalMesh)
-			{
-				GetMesh()->SetSkeletalMesh(SkeletalMesh);
-			}
-			UClass* AnimBPClass = LoadClass<UBaseAnimInstance>(NULL, *PawnAttributeMsg->AnimBPPath);
-			if (AnimBPClass)
-			{
-				GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
-				GetMesh()->SetAnimInstanceClass(AnimBPClass);
-			}
-			AnimSeq_Die = LoadObject<UAnimSequence>(NULL, *PawnAttributeMsg->AnimSeq_Die);
-			AnimSeq_Win = LoadObject<UAnimSequence>(NULL, *PawnAttributeMsg->AnimSeq_Win);
-			AnimMon_GetHit = LoadObject<UAnimMontage>(NULL, *PawnAttributeMsg->AnimMon_GetHit);
-			AnimMon_Attack = LoadObject<UAnimMontage>(NULL, *PawnAttributeMsg->AnimMon_Attack);
-
-			//SkillData
-			TArray<int32> Skillids;
-			int32 idgroup = PawnAttributeMsg->SkillID;
-			while (idgroup > 1000)
-			{
-				int32 spid = idgroup % 10000;
-				Skillids.Add(spid);
-				idgroup = (int32)(idgroup / 10000);
-			}
-			for (int32 i =0;i<Skillids.Num(); i++)
-			{
-				FSkillInfo* Skillinfo = instance->DataManager->GetSkillData(Skillids[i]);
-				if (Skillinfo)
-				{
-					Skillinfo->AnimMon_Skill = LoadObject<UAnimMontage>(NULL, *Skillinfo->AnimPath);
-					SkillInfos.Add(Skillids[i], *Skillinfo);
-				}
-			}
-		}
-	}
-}
-
 bool ABaseBattlePawn::GetSkillInfo(int32 SkillID, FSkillInfo& info)
 {
 	if (SkillID == 1)
@@ -206,18 +150,19 @@ void ABaseBattlePawn::HandleDamage(ABaseBattlePawn* Attacker, FSkillInfo& skilli
 		float damage = 0.f;
 		if (DamageType == 0) //ÎïÀíÉËº¦
 		{
-			damage = Attacker->Attribute.CurATK * skillinfo.Damage - Attribute.CurDefense;
+			damage = Attacker->GetCurATK() * skillinfo.Damage - GetCurDefence();
 		}
 		else if(DamageType == 1) //Ä§·¨ÉËº¦
 		{
-			damage = Attacker->Attribute.CurMagicATK * skillinfo.Damage - Attribute.CurMagicDefense;
+			damage = Attacker->GetCurMagicATK() * skillinfo.Damage - GetCurMagicDefence();
 		}
 		
 		damage = FMath::Max<float>(0.f, damage) * (bIsInDefense ? 0.3f : 1.f);
-		Attribute.CurHP -= damage;
-		if (Attribute.CurHP <= 0.f)
+		DecCurHP(damage);
+		
+		if (GetCurHP() <= 0.f)
 		{
-			Attribute.CurHP = 0.f;
+			SetCurHP(0.f);
 			Die();
 		}
 		else
@@ -229,7 +174,7 @@ void ABaseBattlePawn::HandleDamage(ABaseBattlePawn* Attacker, FSkillInfo& skilli
 		}
 		if (HPWidget)
 		{
-			HPWidget->SetHPTxt(Attribute.CurHP, Attribute.MaxHP);
+			HPWidget->SetHPTxt(GetCurHP(), GetMaxHP());
 		}
 	}	
 }

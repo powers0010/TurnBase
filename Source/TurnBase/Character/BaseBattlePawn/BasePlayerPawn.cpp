@@ -16,15 +16,15 @@ void ABasePlayerPawn::InitPawnFromData(int32 id)
 		FHeroAttributeData* HeroAttributeMsg = instance->DataManager->GetHeroAttributeAsset(id);
 		if (HeroAttributeMsg)
 		{
-			Attribute.PawnName = HeroAttributeMsg->PawnName;
-			Attribute.CurATK = Attribute.ATK = HeroAttributeMsg->ATK;
-			Attribute.CurMagicATK = Attribute.MagicATK = HeroAttributeMsg->MagicATK;
-			Attribute.CurDefense = Attribute.Defense = HeroAttributeMsg->Defense;
-			Attribute.CurMagicDefense = Attribute.MagicDefense = HeroAttributeMsg->MagicDefense;
-			Attribute.CurBattleRateSpeed = Attribute.BattleRateSpeed = HeroAttributeMsg->BattleRateSpeed;
-			Attribute.CurHP = Attribute.MaxHP = HeroAttributeMsg->MaxHP;
-			Attribute.CurLevel = 1;
-			Attribute.FightSeqImage = LoadObject<UTexture2D>(NULL, *HeroAttributeMsg->Image_FightSeq);
+			PawnName = HeroAttributeMsg->PawnName;
+			CurATK = ATK = HeroAttributeMsg->ATK;
+			CurMagicATK = MagicATK = HeroAttributeMsg->MagicATK;
+			CurDefense = Defense = HeroAttributeMsg->Defense;
+			CurMagicDefense = MagicDefense = HeroAttributeMsg->MagicDefense;
+			CurBattleRateSpeed = BattleRateSpeed = HeroAttributeMsg->BattleRateSpeed;
+			CurHP = MaxHP = HeroAttributeMsg->MaxHP;
+			CurLevel = 1;
+			FightSeqImage = LoadObject<UTexture2D>(NULL, *HeroAttributeMsg->Image_FightSeq);
 
 			USkeletalMesh* SkeletalMesh = LoadObject<USkeletalMesh>(NULL, *HeroAttributeMsg->MeshPath);
 			if (SkeletalMesh)
@@ -71,10 +71,10 @@ void ABasePlayerPawn::ResetForBattleEnd(FVector loc)
 	if (!bIsAlive)
 	{
 		bIsAlive = true;
-		Attribute.CurHP = 1.f;
+		CurHP = 1.f;
 		if (HPWidget)
 		{
-			HPWidget->SetHPTxt(Attribute.CurHP, Attribute.MaxHP);
+			HPWidget->SetHPTxt(CurHP, MaxHP);
 			HPWidget->SetHPVisible(true);
 			HPWidget->SetNameVisible(true);
 		}

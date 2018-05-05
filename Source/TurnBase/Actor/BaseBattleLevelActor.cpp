@@ -14,6 +14,7 @@
 #include "Controller/BaseBattlePawnController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Character/BaseBattlePawn/BasePlayerPawn.h"
+#include "Character/BaseBattlePawn/BaseBattleNPC.h"
 
 
 const int32  SeatingNum = 6;
@@ -198,7 +199,7 @@ void ABaseBattleLevelActor::BattleStart(class ATurnBaseCharacter* player, class 
 			{
 				if (BlueGroup.Num() > i && BlueGroup[i])
 				{
-					ABaseBattlePawn* btp = GetWorld()->SpawnActor<ABaseBattlePawn>(ABaseBattlePawn::StaticClass(), BlueGroup[i]->GetComponentTransform());
+					ABaseBattlePawn* btp = GetWorld()->SpawnActor<ABaseBattleNPC>(ABaseBattleNPC::StaticClass(), BlueGroup[i]->GetComponentTransform());
 					if (btp)
 					{
 						btp->InitPawnFromData(Enemy->GetAllEnemy()[i]);
@@ -308,7 +309,7 @@ void ABaseBattleLevelActor::BattleTick(float DeltaTime)
 		{
 			if (It.Key()->bIsAlive)
 			{
-				It.Value().FightSeq += It.Key()->GetAttribute().CurBattleRateSpeed * DeltaTime;
+				It.Value().FightSeq += It.Key()->GetCurBattleRateSpeed() * DeltaTime;
 				if (It.Value().FightSeq > 100.f)
 				{
 					It.Value().FightSeq = 0.f;
@@ -327,7 +328,7 @@ void ABaseBattleLevelActor::BattleTick(float DeltaTime)
 		{
 			if (It.Key()->bIsAlive)
 			{
-				It.Value().FightSeq += It.Key()->GetAttribute().CurBattleRateSpeed * DeltaTime;
+				It.Value().FightSeq += It.Key()->GetCurBattleRateSpeed() * DeltaTime;
  				if (It.Value().FightSeq > 100.f)
  				{
  					It.Value().FightSeq = 0.f;

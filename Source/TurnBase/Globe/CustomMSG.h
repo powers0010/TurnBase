@@ -72,25 +72,15 @@ struct FPawnAttribute
 		float CurHP;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float ATK;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
 		float CurATK;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float MagicATK;
 	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
 		float CurMagicATK;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float Defense;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
 		float CurDefense;
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float MagicDefense;
 	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
 		float CurMagicDefense;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
-		float BattleRateSpeed;
 	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
 		float CurBattleRateSpeed;
 

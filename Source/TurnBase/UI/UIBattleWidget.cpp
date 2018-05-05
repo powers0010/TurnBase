@@ -164,14 +164,14 @@ void UUIBattleWidget::AddFightSeqImage(class ABaseBattlePawn* OnPawn)
 {
 	if (FightSeqCanvas && FightSeqClass)
 	{
-		if (OnPawn && OnPawn->Attribute.FightSeqImage)
+		if (OnPawn && OnPawn->GetFightSeqImage())
 		{
 			UUIFightSeqWidget* img = NewObject<UUIFightSeqWidget>(this, FightSeqClass);
 			if (img)
 			{				
 				FightSeqCanvas->AddChildToCanvas(img);
 				img->SetAlignmentInViewport(FVector2D(0.f, 0.f));				
-				img->SetPawnIcon(OnPawn->Attribute.FightSeqImage);
+				img->SetPawnIcon(OnPawn->GetFightSeqImage());
 				FightSeqImages.Add(OnPawn, img);
 			}
 		}

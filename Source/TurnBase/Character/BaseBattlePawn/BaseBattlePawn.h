@@ -21,17 +21,25 @@ public:
 
 	FORCEINLINE class UUIHPWidget* GetHPWidget() { return HPWidget; }
 
-	FORCEINLINE void InitAttribute(FPawnAttribute& InAttribute) { Attribute = InAttribute; }
-
-	FORCEINLINE FPawnAttribute& GetAttribute() { return Attribute; }
-
 	FORCEINLINE TMap<int32, FSkillInfo>& GetSkillInfos() { return SkillInfos; }
 
 	bool GetSkillInfo(int32 SkillID, FSkillInfo& info);
 
-	virtual	void InitPawnFromData(int32 id);
+	virtual	void InitPawnFromData(int32 id){}
 
-	
+	FORCEINLINE FText GetViewName() { return PawnName; }
+	FORCEINLINE float GetMaxHP() { return MaxHP; }
+	FORCEINLINE float GetCurHP() { return CurHP; }
+	FORCEINLINE float GetCurBattleRateSpeed() { return CurBattleRateSpeed; }
+	FORCEINLINE float GetCurATK() { return CurATK; }
+	FORCEINLINE float GetCurMagicATK() { return CurMagicATK; }
+	FORCEINLINE float GetCurDefence() { return CurDefense; }
+	FORCEINLINE float GetCurMagicDefence() { return CurMagicDefense; }
+	FORCEINLINE UTexture2D* GetFightSeqImage() { return FightSeqImage; }
+
+	FORCEINLINE void SetCurHP(float newhp) { CurHP = newhp; }
+	FORCEINLINE void DecCurHP(float damage) { CurHP -= damage; }
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -53,12 +61,39 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 		class UAnimMontage* AnimMon_Attack = nullptr;
 
-public:
 	UPROPERTY(EditDefaultsOnly)
 		int32 AttributeID = 0;
-	UPROPERTY(EditDefaultsOnly)
-		FPawnAttribute Attribute;
-	
+
+	//----------Attribute-------------------
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		FText PawnName;
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float MaxHP;
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float CurHP;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float CurATK;
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float CurMagicATK;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float CurDefense;
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float CurMagicDefense;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float CurBattleRateSpeed;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		int32 CurLevel;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		class UTexture2D* FightSeqImage = nullptr;
+
+public:
+
+		
 	bool bIsAlive = true;
 
 	bool bIsInDefense = false;

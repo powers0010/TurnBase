@@ -19,5 +19,22 @@ public:
 
 	void ResetForBattleEnd(FVector loc);
 	
+
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float ATK;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float MagicATK;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float Defense;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float MagicDefense;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Attribute")
+		float BattleRateSpeed;
 	
 };

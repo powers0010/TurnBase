@@ -12,10 +12,10 @@ void UUIHPWidget::NativeConstruct()
 	if (owner)
 	{
 		NameTxt = Cast<UTextBlock>(GetWidgetFromName(TEXT("NameTxt")));
-		SetNameTxt(owner->GetAttribute().PawnName);
+		SetNameTxt(owner->GetViewName());
 
 		HPTxt = Cast<UTextBlock>(GetWidgetFromName(TEXT("HPTxt")));
-		SetHPTxt(owner->GetAttribute().CurHP, owner->GetAttribute().MaxHP);
+		SetHPTxt(owner->GetCurHP(), owner->GetMaxHP());
 
 		ArrowImage = Cast<UImage>(GetWidgetFromName(TEXT("Arrow")));
 
