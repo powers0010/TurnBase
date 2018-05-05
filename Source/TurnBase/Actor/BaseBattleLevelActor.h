@@ -98,6 +98,8 @@ public:
 	void OnDefense();
 
 	void ClearCurDamageEnemys();
+
+	void OnMoveSuccess(bool bIsToAttacking);
 protected:
 	void PlayerSelectEnemy(ABaseBattlePawn* Attacker);
 	

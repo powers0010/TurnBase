@@ -21,15 +21,15 @@ public:
 
 	FORCEINLINE class UUIHPWidget* GetHPWidget() { return HPWidget; }
 
-	FORCEINLINE void InitAttribute(FAttribute& InAttribute) { Attribute = InAttribute; }
+	FORCEINLINE void InitAttribute(FPawnAttribute& InAttribute) { Attribute = InAttribute; }
 
-	FORCEINLINE FAttribute& GetAttribute() { return Attribute; }
+	FORCEINLINE FPawnAttribute& GetAttribute() { return Attribute; }
 
 	FORCEINLINE TMap<int32, FSkillInfo>& GetSkillInfos() { return SkillInfos; }
 
 	bool GetSkillInfo(int32 SkillID, FSkillInfo& info);
 
-	void InitPawnFromData(int32 id);
+	virtual	void InitPawnFromData(int32 id);
 
 	
 protected:
@@ -57,13 +57,23 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		int32 AttributeID = 0;
 	UPROPERTY(EditDefaultsOnly)
-		FAttribute Attribute;
+		FPawnAttribute Attribute;
 	
 	bool bIsAlive = true;
 
 	bool bIsInDefense = false;
 
 	class ABaseBattleLevelActor* CurLevelActor = nullptr;
+
+protected:
+	FVector MoveOrign;
+	FVector MoveTargetLoc;
+	bool bNeedMove = false;
+	bool bIsMoveToAttacking = true;
+
+	bool bNeedRot = false;
+	FRotator TargetRot;
+	float DeYaw;
 public:
 
 	float DoAttack(int32 SkillID);
@@ -76,4 +86,7 @@ public:
 
 	void OnWin();
 
+	void MoveToTarget(FVector& TargetLoc, bool bIsToAttacking);
+
+	void RotatorToTargetRotator(FRotator& Rot);
 };

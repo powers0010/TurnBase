@@ -32,6 +32,7 @@ ABaseBattlePawn::ABaseBattlePawn()
 	GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f,0.f));
 
 	GetCharacterMovement()->MaxWalkSpeed = 200.f;
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	WidgetComComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("HPWidgetCom"));
 	WidgetComComponent->SetupAttachment(GetCapsuleComponent());
@@ -65,6 +66,52 @@ void ABaseBattlePawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (bNeedMove)
+	{
+		FVector Dir = (MoveTargetLoc - MoveOrign).GetSafeNormal();
+		AddMovementInput(Dir);
+		
+		if (FVector::DotProduct((GetActorLocation()- MoveTargetLoc), Dir) > 0.f)
+		{
+			SetActorLocation(MoveTargetLoc);
+			bNeedMove = false;
+			if (CurLevelActor)
+			{
+				CurLevelActor->OnMoveSuccess(bIsMoveToAttacking);
+			}
+		}
+	}
+
+	if (bNeedRot)
+	{
+		FRotator nextrot = GetActorRotation();
+		nextrot.Yaw += DeYaw *DeltaTime * 4.f;
+
+		if ((TargetRot.Yaw - nextrot.Yaw)*DeYaw < 0.f)
+		{
+			SetActorRotation(TargetRot);
+			bNeedRot = false;
+		}
+		else
+		{
+			SetActorRotation(nextrot);
+		}
+	}
+}
+
+void ABaseBattlePawn::MoveToTarget(FVector& TargetLoc, bool bIsToAttacking)
+{
+	MoveOrign = GetActorLocation();
+	MoveTargetLoc = TargetLoc;
+	bIsMoveToAttacking = bIsToAttacking;
+	bNeedMove = true;
+}
+
+void ABaseBattlePawn::RotatorToTargetRotator(FRotator& Rot)
+{
+	TargetRot = Rot;
+	DeYaw = Rot.Yaw - GetActorRotation().Yaw;
+	bNeedRot = true;
 }
 
 void ABaseBattlePawn::InitPawnFromData(int32 id)
@@ -72,38 +119,38 @@ void ABaseBattlePawn::InitPawnFromData(int32 id)
 	UMyGameInstance* instance = Cast<UMyGameInstance>(GetGameInstance());
 	if (instance && instance->DataManager)
 	{
-		FAttributeData* HeroAttributeMsg = instance->DataManager->GetAttributeAsset(id);
-		if (HeroAttributeMsg)
+		FPawnAttributeData* PawnAttributeMsg = instance->DataManager->GetPawnAttributeAsset(id);
+		if (PawnAttributeMsg)
 		{
-			Attribute.PawnName = HeroAttributeMsg->PawnName;
-			Attribute.CurATK = Attribute.ATK = HeroAttributeMsg->ATK;
-			Attribute.CurMagicATK = Attribute.MagicATK = HeroAttributeMsg->MagicATK;
-			Attribute.CurDefense = Attribute.Defense = HeroAttributeMsg->Defense;
-			Attribute.CurMagicDefense = Attribute.MagicDefense = HeroAttributeMsg->MagicDefense;
-			Attribute.CurBattleRateSpeed = Attribute.BattleRateSpeed = HeroAttributeMsg->BattleRateSpeed;
-			Attribute.CurHP = Attribute.MaxHP = HeroAttributeMsg->MaxHP;
+			Attribute.PawnName = PawnAttributeMsg->PawnName;
+			Attribute.CurATK = Attribute.ATK = PawnAttributeMsg->ATK;
+			Attribute.CurMagicATK = Attribute.MagicATK = PawnAttributeMsg->MagicATK;
+			Attribute.CurDefense = Attribute.Defense = PawnAttributeMsg->Defense;
+			Attribute.CurMagicDefense = Attribute.MagicDefense = PawnAttributeMsg->MagicDefense;
+			Attribute.CurBattleRateSpeed = Attribute.BattleRateSpeed = PawnAttributeMsg->BattleRateSpeed;
+			Attribute.CurHP = Attribute.MaxHP = PawnAttributeMsg->MaxHP;
 			Attribute.CurLevel = 1;
-			Attribute.FightSeqImage = LoadObject<UTexture2D>(NULL, *HeroAttributeMsg->Image_FightSeq);
+			Attribute.FightSeqImage = LoadObject<UTexture2D>(NULL, *PawnAttributeMsg->Image_FightSeq);
 
-			USkeletalMesh* SkeletalMesh = LoadObject<USkeletalMesh>(NULL, *HeroAttributeMsg->MeshPath);
+			USkeletalMesh* SkeletalMesh = LoadObject<USkeletalMesh>(NULL, *PawnAttributeMsg->MeshPath);
 			if (SkeletalMesh)
 			{
 				GetMesh()->SetSkeletalMesh(SkeletalMesh);
 			}
-			UClass* AnimBPClass = LoadClass<UBaseAnimInstance>(NULL, *HeroAttributeMsg->AnimBPPath);
+			UClass* AnimBPClass = LoadClass<UBaseAnimInstance>(NULL, *PawnAttributeMsg->AnimBPPath);
 			if (AnimBPClass)
 			{
 				GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
 				GetMesh()->SetAnimInstanceClass(AnimBPClass);
 			}
-			AnimSeq_Die = LoadObject<UAnimSequence>(NULL, *HeroAttributeMsg->AnimSeq_Die);
-			AnimSeq_Win = LoadObject<UAnimSequence>(NULL, *HeroAttributeMsg->AnimSeq_Win);
-			AnimMon_GetHit = LoadObject<UAnimMontage>(NULL, *HeroAttributeMsg->AnimMon_GetHit);
-			AnimMon_Attack = LoadObject<UAnimMontage>(NULL, *HeroAttributeMsg->AnimMon_Attack);		
+			AnimSeq_Die = LoadObject<UAnimSequence>(NULL, *PawnAttributeMsg->AnimSeq_Die);
+			AnimSeq_Win = LoadObject<UAnimSequence>(NULL, *PawnAttributeMsg->AnimSeq_Win);
+			AnimMon_GetHit = LoadObject<UAnimMontage>(NULL, *PawnAttributeMsg->AnimMon_GetHit);
+			AnimMon_Attack = LoadObject<UAnimMontage>(NULL, *PawnAttributeMsg->AnimMon_Attack);
 
 			//SkillData
 			TArray<int32> Skillids;
-			int32 idgroup = HeroAttributeMsg->SkillID;
+			int32 idgroup = PawnAttributeMsg->SkillID;
 			while (idgroup > 1000)
 			{
 				int32 spid = idgroup % 10000;

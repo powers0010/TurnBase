@@ -454,14 +454,51 @@ void ABaseBattleLevelActor::MoveToAttackerTargetLoc()
 			CurAttackerMoveTarget = Tarloc - 80.f*CurAttacker->GetActorForwardVector();
 			CurAttackerMoveTarget.Z = CurAttacker->GetActorLocation().Z;
 
-			UNavigationSystem* const NavSys = GetWorld()->GetNavigationSystem();
-			if (NavSys)
-			{
-				GetWorld()->GetTimerManager().SetTimer(CheckForAttackerMoveTimer, this, &ABaseBattleLevelActor::CheckForAttackerMoveToTargetLoc, 0.1f, true);
-				NavSys->SimpleMoveToLocation(Contr, CurAttackerMoveTarget);
-			}
+			CurAttacker->MoveToTarget(CurAttackerMoveTarget, true);
+			//UNavigationSystem* const NavSys = GetWorld()->GetNavigationSystem();
+			//if (NavSys)
+			//{
+			//	GetWorld()->GetTimerManager().SetTimer(CheckForAttackerMoveTimer, this, &ABaseBattleLevelActor::CheckForAttackerMoveToTargetLoc, 0.1f, true);
+			//	NavSys->SimpleMoveToLocation(Contr, CurAttackerMoveTarget);
+			//}
 		}
 	}	
+}
+
+void ABaseBattleLevelActor::OnMoveSuccess(bool bIsToAttacking)
+{
+	if (bIsToAttacking)
+	{
+		if (PlayerPawns.Contains(CurAttacker))
+		{
+			CurAttacker->SetActorRotation(RedGroup[0]->GetComponentRotation());
+			DoAttack(CurSkillID);
+		}
+		else if (EnemyPawns.Contains(CurAttacker))
+		{
+			CurAttacker->SetActorRotation(BlueGroup[0]->GetComponentRotation());
+			DoAttack(CurSkillID);
+		}
+	}
+	else
+	{
+		FRotator rot = FRotator(ForceInitToZero);
+		FVector loc = FVector(ForceInitToZero);
+		if (PlayerPawns.Contains(CurAttacker))
+		{
+			rot = RedGroup[PlayerPawns[CurAttacker].LocIndex]->GetComponentRotation();
+			loc = RedGroup[PlayerPawns[CurAttacker].LocIndex]->GetComponentLocation();
+		}
+		else if (EnemyPawns.Contains(CurAttacker))
+		{
+			rot = BlueGroup[EnemyPawns[CurAttacker].LocIndex]->GetComponentRotation();
+			loc = BlueGroup[EnemyPawns[CurAttacker].LocIndex]->GetComponentLocation();
+		}
+		CurAttacker->RotatorToTargetRotator(rot);
+		//CurAttacker->SetActorRotation(rot);
+		//CurAttacker->SetActorLocation(loc);
+		HandleAttackEnd();
+	}
 }
 
 void ABaseBattleLevelActor::CheckForAttackerMoveToTargetLoc()
@@ -503,13 +540,14 @@ void ABaseBattleLevelActor::MoveBackAfterAttack()
 			}
 			CurAttackerMoveTarget.Z = CurAttacker->GetActorLocation().Z;
 
-			UNavigationSystem* const NavSys = GetWorld()->GetNavigationSystem();
-			if (NavSys)
-			{
-				GetWorld()->GetTimerManager().SetTimer(CheckForAttackerMoveTimer, this, &ABaseBattleLevelActor::CheckForAttackerMoveBack, 0.1f, true);
+			CurAttacker->MoveToTarget(CurAttackerMoveTarget, false);
+			//UNavigationSystem* const NavSys = GetWorld()->GetNavigationSystem();
+			//if (NavSys)
+			//{
+			//	GetWorld()->GetTimerManager().SetTimer(CheckForAttackerMoveTimer, this, &ABaseBattleLevelActor::CheckForAttackerMoveBack, 0.1f, true);
 
-				NavSys->SimpleMoveToLocation(Contr, CurAttackerMoveTarget);
-			}
+			//	NavSys->SimpleMoveToLocation(Contr, CurAttackerMoveTarget);
+			//}
 		}
 	}	
 }

@@ -18,11 +18,16 @@ class TURNBASE_API UDataAssetManager : public UPrimaryDataAsset
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DataAsset")
 		TAssetPtr<class UDataTable>   HeroAttributeMsg;
-	
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DataAsset")
+		TAssetPtr<class UDataTable>   PawnAttributeMsg;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "DataAsset")
 		TAssetPtr<class UDataTable>   SkillData;
 public:
-	FAttributeData* GetAttributeAsset( int32 key);
+	FHeroAttributeData * GetHeroAttributeAsset(int32 key);
+
+	FPawnAttributeData* GetPawnAttributeAsset( int32 key);
 
 	FSkillInfo* GetSkillData(int32 key);
 };
