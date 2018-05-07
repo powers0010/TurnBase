@@ -9,8 +9,15 @@
 /**
  * 
  */
+//玩家将领非战斗状态时的位置
+const FVector PlayerPawnStandLoc = FVector(-30000.f, 8000.f, 950.f);
 
+//玩家摄像机可调整视野距离
+const float MaxZoomOutLength = 1000.f;
+const float MinZoomInLength = 200.f;
+const float CameraAngle = -40.f;
 
+//玩家移动速度
 const float MaxWalkSpeed = 400.f;
 const FVector2D CapsuleSize = FVector2D(30.f, 60.f);
 const FVector MeshScale = FVector(1.5f);

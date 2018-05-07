@@ -8,6 +8,7 @@
 #include "Character/TurnBaseCharacter.h"
 #include "Engine/World.h"
 #include "Actor/BaseBattleLevelActor.h"
+#include "Globe/CustomMSG.h"
 
 ATurnBasePlayerController::ATurnBasePlayerController()
 {
@@ -131,7 +132,7 @@ void ATurnBasePlayerController::OnZommOut()
 	ATurnBaseCharacter* character = Cast<ATurnBaseCharacter>(GetPawn());
 	if (character)
 	{
-		character->GetCameraBoom()->TargetArmLength = FMath::Min<float>(character->GetCameraBoom()->TargetArmLength + 10.f, 600.f);
+		character->GetCameraBoom()->TargetArmLength = FMath::Min<float>(character->GetCameraBoom()->TargetArmLength + 10.f, MaxZoomOutLength);
 	}
 }
 
@@ -140,7 +141,7 @@ void ATurnBasePlayerController::OnZoomIn()
 	ATurnBaseCharacter* character = Cast<ATurnBaseCharacter>(GetPawn());
 	if (character)
 	{
-		character->GetCameraBoom()->TargetArmLength = FMath::Max<float>(character->GetCameraBoom()->TargetArmLength - 10.f, 200.f);
+		character->GetCameraBoom()->TargetArmLength = FMath::Max<float>(character->GetCameraBoom()->TargetArmLength - 10.f, MinZoomInLength);
 	}
 }
 

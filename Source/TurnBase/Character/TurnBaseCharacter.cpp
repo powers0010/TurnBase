@@ -47,7 +47,7 @@ ATurnBaseCharacter::ATurnBaseCharacter()
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->bAbsoluteRotation = true; // Don't want arm to rotate when character does
 	CameraBoom->TargetArmLength = 800.f;
-	CameraBoom->RelativeRotation = FRotator(-60.f, 0.f, 0.f);
+	CameraBoom->RelativeRotation = FRotator(CameraAngle, 0.f, 0.f);
 	CameraBoom->bDoCollisionTest = false; // Don't want to pull camera in when it collides with level
 
 	// Create a camera...
@@ -120,7 +120,7 @@ void ATurnBaseCharacter::BeginPlay()
 	{
 		for (int32 i = 0; i < FMath::Min<int32>(DefaultPawn.Num(), 6); i++)
 		{
-			PlayerPawns[i] = GetWorld()->SpawnActor<ABasePlayerPawn>(ABasePlayerPawn::StaticClass(), PawnsDefaultLoc + FVector(50.f*i, 0.f, 0.f), FRotator(ForceInit));
+			PlayerPawns[i] = GetWorld()->SpawnActor<ABasePlayerPawn>(ABasePlayerPawn::StaticClass(), PlayerPawnStandLoc + FVector(50.f*i, 0.f, 0.f), FRotator(ForceInit));
 			if (PlayerPawns[i])
 			{
 				PlayerPawns[i]->InitPawnFromData(DefaultPawn[i]);
@@ -150,7 +150,7 @@ void ATurnBaseCharacter::ResetPawnsLoc()
 	{
 		if (PlayerPawns[i])
 		{
-			PlayerPawns[i]->ResetForBattleEnd(PawnsDefaultLoc);
+			PlayerPawns[i]->ResetForBattleEnd(PlayerPawnStandLoc + FVector(50.f*i, 0.f, 0.f));
 		}
 	}
 }

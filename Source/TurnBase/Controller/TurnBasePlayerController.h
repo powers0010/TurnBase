@@ -39,7 +39,6 @@ protected:
 	void OnSetDestinationPressed();
 	void OnSetDestinationReleased();
 
-	void DoEnemySelect();
 public:
 	class ABaseBattleLevelActor* CurBattleLevelActor;
 

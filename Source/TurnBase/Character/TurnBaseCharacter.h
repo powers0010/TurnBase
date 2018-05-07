@@ -51,9 +51,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 		TArray<int32> DefaultPawn;
 
-	UPROPERTY(EditDefaultsOnly)
-		FVector PawnsDefaultLoc = FVector(0.f, 0.f, 10100.0f);
-
 	UPROPERTY()
 		TMap<int32 , ABasePlayerPawn*> PlayerPawns;
 
